@@ -1,0 +1,604 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evidence policy scientific aggregate results",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "study",
+    "limits",
+    "provenance",
+    "artifact_manifest",
+    "confirmation_clean",
+    "prior_ablation",
+    "design_diagnostics",
+    "dp_tractability",
+    "tune_selection",
+    "resources"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "status": {
+      "type": "object",
+      "required": [
+        "confirmation_executed",
+        "claim_scope"
+      ],
+      "properties": {
+        "confirmation_executed": {
+          "type": "boolean"
+        },
+        "claim_scope": {
+          "type": "string"
+        }
+      }
+    },
+    "study": {
+      "type": "object"
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "artifact_manifest": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "artifact_id",
+          "phase",
+          "kind",
+          "sha256",
+          "bytes",
+          "availability"
+        ],
+        "properties": {
+          "artifact_id": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "availability": {
+            "enum": [
+              "bundled",
+              "local_available_unpublished",
+              "external_reproducible",
+              "not_bundled"
+            ]
+          },
+          "logical_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reproduction_command": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "original_raw_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "projection_note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "confirmation_clean": {
+      "type": "object",
+      "required": [
+        "grid_validation",
+        "cells",
+        "paired_contrasts_vs_compiled",
+        "analytical_report_controls"
+      ],
+      "properties": {
+        "grid_validation": {
+          "type": "object",
+          "required": [
+            "planned_rows",
+            "completed_rows",
+            "unique_complete_grid"
+          ],
+          "properties": {
+            "planned_rows": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "completed_rows": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unique_complete_grid": {
+              "const": true
+            },
+            "n_objects": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_cells": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "cells": {
+          "type": "array",
+          "minItems": 64,
+          "maxItems": 64,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/cell"
+              },
+              {
+                "properties": {
+                  "method": {
+                    "enum": [
+                      "eager",
+                      "compiled",
+                      "fail_closed",
+                      "ec2"
+                    ]
+                  },
+                  "scenario": {
+                    "const": "clean"
+                  },
+                  "support": {
+                    "const": "logical"
+                  },
+                  "missing_semantics": {
+                    "const": "unknown"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "paired_contrasts_vs_compiled": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "profile",
+              "cost_scenario",
+              "budget",
+              "method",
+              "baseline",
+              "n_pairs",
+              "n_objects",
+              "cost_difference_all_requests",
+              "cost_difference_all_requests_ci95",
+              "completion_rate_difference",
+              "completion_rate_difference_ci95",
+              "n_both_complete",
+              "both_complete_effective_objects",
+              "replicates",
+              "seed"
+            ],
+            "properties": {
+              "profile": {
+                "type": "string"
+              },
+              "cost_scenario": {
+                "type": "string"
+              },
+              "budget": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "method": {
+                "type": "string"
+              },
+              "baseline": {
+                "const": "compiled"
+              },
+              "n_pairs": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "n_objects": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "n_both_complete": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "both_complete_effective_objects": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cost_difference_all_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "cost_difference_all_requests_ci95": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "completion_rate_difference": {
+                "type": "number"
+              },
+              "completion_rate_difference_ci95": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "replicates": {
+                "const": 2000
+              },
+              "seed": {
+                "const": 20261102
+              }
+            }
+          }
+        },
+        "analytical_report_controls": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "prior_ablation": {
+      "type": "object",
+      "required": [
+        "cells",
+        "paired_contrasts",
+        "ec2_diagnostics"
+      ],
+      "properties": {
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell"
+          }
+        },
+        "paired_contrasts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "ec2_diagnostics": {
+          "type": "object"
+        }
+      }
+    },
+    "design_diagnostics": {
+      "type": "object",
+      "required": [
+        "clean_cells",
+        "unknown_fault_cells",
+        "negative_cells",
+        "literal_cells"
+      ],
+      "properties": {
+        "clean_cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell"
+          }
+        },
+        "unknown_fault_cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell"
+          }
+        },
+        "negative_cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell"
+          }
+        },
+        "literal_cells": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "dp_tractability": {
+      "type": "object",
+      "required": [
+        "n_requested",
+        "n_failed",
+        "scope",
+        "cells"
+      ],
+      "properties": {
+        "n_requested": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "string"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell"
+          }
+        }
+      }
+    },
+    "tune_selection": {
+      "type": "object",
+      "required": [
+        "n_objects",
+        "n_sessions",
+        "independent_confirmation_estimate",
+        "configuration_semantic_sha256",
+        "cells"
+      ],
+      "properties": {
+        "n_objects": {
+          "const": 256
+        },
+        "n_sessions": {
+          "const": 1024
+        },
+        "independent_confirmation_estimate": {
+          "const": false
+        },
+        "configuration_semantic_sha256": {
+          "type": "string"
+        },
+        "cells": {
+          "type": "array",
+          "minItems": 16,
+          "maxItems": 16,
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "required": [
+        "stages",
+        "timing_scope_note"
+      ],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "timing_scope_note": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "cell": {
+      "type": "object",
+      "required": [
+        "profile",
+        "cost_scenario",
+        "budget",
+        "method",
+        "scenario",
+        "support",
+        "missing_semantics",
+        "n_requested",
+        "n_objects",
+        "tasks_complete",
+        "decision_certified",
+        "execution_failures",
+        "unsupported_singletons",
+        "mean_imposed_cost_all_requests",
+        "no_reference_looks",
+        "independently_compared_objects",
+        "completed_task_subset"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "decision_only",
+            "legacy_report"
+          ]
+        },
+        "cost_scenario": {
+          "enum": [
+            "shared",
+            "independent"
+          ]
+        },
+        "budget": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "method": {
+          "type": "string"
+        },
+        "scenario": {
+          "type": "string"
+        },
+        "support": {
+          "enum": [
+            "logical",
+            "empirical"
+          ]
+        },
+        "missing_semantics": {
+          "enum": [
+            "unknown",
+            "negative"
+          ]
+        },
+        "n_requested": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_objects": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tasks_complete": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decision_certified": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reports_complete": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_decisions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "incomplete_reports": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "execution_failures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unsupported_singletons": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "objects_with_unsupported_singleton": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reference_eligible_looks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_reference_looks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "independently_compared_looks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "independently_compared_objects": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "independent_reference_disagreements": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "independent_error_objects": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_known_costs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "eligible_intervention_looks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "eligible_intervention_objects": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mean_imposed_cost_all_requests": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "zero_error_object_upper_95_two_sided": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "error_bound_scope": {
+          "type": "string"
+        },
+        "completed_task_subset": {
+          "type": "object",
+          "required": [
+            "n",
+            "n_objects",
+            "mean_imposed_cost"
+          ],
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_objects": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mean_imposed_cost": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

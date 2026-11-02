@@ -1,0 +1,285 @@
+{
+  "schema": "evidence-policy-environment-v1",
+  "tested_platform": {
+    "python": "CPython 3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "architecture": "x86_64",
+    "execution": "CPU only",
+    "torch_installed": false,
+    "required_system_library": "libgomp.so.1 or platform OpenMP equivalent"
+  },
+  "source_pins": {
+    "flare": {
+      "repository": "https://github.com/applecider-ml/flare",
+      "revision": "227cbff9b3b11d6cc54f42248be7fcde0be88a15"
+    },
+    "luna": {
+      "repository": "https://github.com/asasli/luna",
+      "revision": "6f2ca0322cfe060ab9d70f25847d65a8378ead48",
+      "archive_url": "https://github.com/asasli/luna/archive/6f2ca0322cfe060ab9d70f25847d65a8378ead48.zip",
+      "archive_sha256": "29c5827db5ae17a815615a4eaa3b52a676341e01688570fd6817473ee9f33e54"
+    },
+    "app": {
+      "legacy_base_revision": "789b7955dc1ede4a7d7ec1a74d8d571e3528eba9",
+      "implementation_identity": "source files in the checkout containing this document; the legacy base is not the feature implementation revision",
+      "source_file_sha256": {
+        "applecider_agents/__init__.py": "0a585f712a64c2da1a254a6d3c67ca10aeec118cecdb840c80901eebc63d09ce",
+        "applecider_agents/cli.py": "510c84f177726615e70ae613b2f11c590a6157803c76111570ed109983409866",
+        "applecider_agents/core/__init__.py": "0d08d54062cb7bad7d0cc80d214dd2393b24d5c24fb7a6ceb39d862eb7435ba2",
+        "applecider_agents/core/acquisition.py": "d9bebaa79073dc9a3de86690fd68d5db53de8ca14ec5305abc955fc609d976c0",
+        "applecider_agents/core/config.py": "a10e8457eb188eba62165b7714f89c3ffcbc7dea0e970b787860d9e81295d717",
+        "applecider_agents/core/data.py": "bf9fd683852628065406f6f782dad489d0a2a91d22c6c19b75da07ed4bbd3ddd",
+        "applecider_agents/core/eval.py": "e11bbc47d73fa6bafbdde78ef4ac94fcc9890e94cc1f959d997875c71a2cff1c",
+        "applecider_agents/core/evidence.py": "c1338531eb9afb4d1b195f58b382e7fc2ae506d8163bee3bfa18fb267070c7c5",
+        "applecider_agents/core/loop.py": "44b49837be5ebba353dfbf7baafbf2130a16bb699116a1a219bb4782335b0fff",
+        "applecider_agents/core/mcp.py": "efed6f173f4084aedd1b2966431a6a9b651ac8e1fe407fcbca56795799df7398",
+        "applecider_agents/core/membership.py": "83aa53f09e592b0f2a23ab6fdc43e9bbd7c831544379ae9ad1b69fcf033b22df",
+        "applecider_agents/core/object_tools.py": "73423755b226f5e6b1e7f4b12ff39199a9b5c9151acb2480b5adb889d2b5319b",
+        "applecider_agents/core/observations.py": "c41a327d291e2f538f9397a7f4c35d2249626ec0b5a2f2f4c2fc221db95ce5c2",
+        "applecider_agents/core/partial.py": "5b75685f781f72a4fbfb1d1b6658110bc1dca918d2eab15fff2e863befa08642",
+        "applecider_agents/core/registry.py": "d2f3b2e5fb3afcafb1d0589a5c96550d7dc4e539f43d72b41aedf9be33bc5402",
+        "applecider_agents/core/report.py": "4e7885430195109405917cab2266dbf3a028c0bb46cfa304ab0db9d777321d0d",
+        "applecider_agents/core/skyportal_client.py": "5b975fd5cd10cfc119152f9412dc2a8fe5d25baaf9f6595b66cc473a445835f6",
+        "applecider_agents/flare/__init__.py": "43627ba389af7580fbc12220cceef647a136b7f5f346bc80b4e3daf86075d230",
+        "applecider_agents/flare/observations.py": "aefec89f2c38f28b6a9b6207bd9cd1dcbb72e6c1a0041515603616870d3cca32",
+        "applecider_agents/flare/partial.py": "2ed36f15d93b2a768e963a7b67d1867c8e3d2a338501f9c287c84f95d7da18c8",
+        "applecider_agents/flare/tools.py": "e19533351a78fe9589d3512fd96e036ff8aab7cdd7a5dc8290dab8010ff76cd8",
+        "applecider_agents/flare/triage.py": "0812c5a754cacfbe1d542217a0ee74a5c814f2809656d9a7ae019f7a299960bf"
+      }
+    }
+  },
+  "tested_runtime_replay_packages": {
+    "annotated-types": "0.8.0",
+    "anthropic": "2.3.0",
+    "anyio": "4.16.0",
+    "attrs": "26.1.0",
+    "certifi": "2026.10.23",
+    "charset-normalizer": "3.5.2",
+    "click": "8.5.0",
+    "cloudpickle": "3.1.2",
+    "contourpy": "1.4.0",
+    "cycler": "0.12.1",
+    "docstring-parser": "0.18.0",
+    "flare-transients": "2.0.0",
+    "fonttools": "4.68.0",
+    "h11": "0.16.0",
+    "httpcore2": "2.16.0",
+    "httpx2": "2.16.0",
+    "idna": "3.20",
+    "jiter": "0.18.0",
+    "joblib": "1.6.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "kiwisolver": "1.5.1",
+    "light-curve": "0.13.1",
+    "lightgbm": "4.6.0",
+    "luna-ood": "0.4.1",
+    "matplotlib": "3.10.8",
+    "mcp": "2.3.0",
+    "mcp-types": "2.3.0",
+    "numpy": "2.3.5",
+    "opentelemetry-api": "1.45.2",
+    "packaging": "26.3",
+    "pandas": "2.3.3",
+    "pillow": "13.0.0",
+    "pyarrow": "23.0.1",
+    "pydantic": "2.14.2",
+    "pydantic-core": "2.50.2",
+    "pyjwt": "2.15.1",
+    "pyparsing": "3.3.3",
+    "python-dateutil": "4.0.0",
+    "python-multipart": "0.0.33",
+    "pytz": "2026.6",
+    "referencing": "0.37.0",
+    "requests": "2.34.2",
+    "rpds-py": "2026.9.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "sniffio": "1.3.1",
+    "sse-starlette": "3.6.0",
+    "starlette": "1.10.0",
+    "threadpoolctl": "3.7.0",
+    "truststore": "0.10.5",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4",
+    "tzdata": "2026.6",
+    "urllib3": "2.8.0",
+    "uvicorn": "0.54.0"
+  },
+  "flare_model_and_data_artifacts": {
+    "models/bts6/top.txt": {
+      "sha256": "e92fce1910609a856bd9aff7e6d6eb1354f0179cdb876445082593b5c221e2a5",
+      "bytes": 2326459
+    },
+    "models/bts6/slsn_branch.txt": {
+      "sha256": "c5a260d1aeea5d0b82e3caad0ccda2c30408eda7e987f82037933e72d55ff61a",
+      "bytes": 268410
+    },
+    "models/bts6/conformal.json": {
+      "sha256": "92ff8f18379e03b1a99264cdca7a3a67e5f3954c3807b56c564e927971d42889",
+      "bytes": 248649
+    },
+    "models/bts6/ad_space.txt": {
+      "sha256": "240201da8443d712e63706c0ad5df5088e9019223cfad9acc0692775c3ed63a2",
+      "bytes": 1967043
+    },
+    "models/bts6/anomaly_calibration.json": {
+      "sha256": "fbd63cbad8bab89064cc386ffb8ed3dd4cf0f660cbce98a4c611c6d1d0c3e050",
+      "bytes": 22751
+    },
+    "models/bts6/model_card.json": {
+      "sha256": "8e2f5519a2cd39c14950aeca6014fd9adb1819356905322a6b9f9e08a21ee4a4",
+      "bytes": 7369
+    },
+    "models/bts6/venn_abers.json": {
+      "sha256": "23475958f272fea318b0ad71680bd098c6da8f9931082c6312512f6ec330eec1",
+      "bytes": 880277
+    },
+    "models/bts6/consensus.pkl.gz": {
+      "sha256": "b1027b7992dc81866e9d54f7247b1468ce82e4d3b216cc1ff72b1cdbf7824890",
+      "bytes": 10428435
+    },
+    "models/bts6/manifest.json": {
+      "sha256": "409146799664f7965159ffee0ed830e13bfe0d67940e521db3b61ec2661e67a4",
+      "bytes": 996
+    },
+    "models/bts6/review_combiner.json": {
+      "sha256": "558d9ca10204dfff93dd2e298344fbab92d014abe2a0a94e73df853189ff6cba",
+      "bytes": 40432
+    },
+    "models/bts6/early/h5/top.txt": {
+      "sha256": "28d96aa36bf6f19d19e27b6d4e9b467e52ea9e5bc185635c736a7ff412bc1bb4",
+      "bytes": 3426608
+    },
+    "models/bts6/early/h5/slsn_branch.txt": {
+      "sha256": "3cd54f637f3e2dd86067f5ee66d7ea1aedb957594b955bd63355be09e651b055",
+      "bytes": 372199
+    },
+    "models/bts6/early/h5/conformal.json": {
+      "sha256": "06cdd914fbb288ffc06686a6157cce4fc83c710fd45aff1cdb903d274160ff59",
+      "bytes": 298323
+    },
+    "models/bts6/early/h5/ad_space.txt": {
+      "sha256": "f4046fcf4180cb153804898dcb360d75cb4001919ca571907879f10a6fff8780",
+      "bytes": 2903359
+    },
+    "models/bts6/early/h5/anomaly_calibration.json": {
+      "sha256": "9793df23781a31d9c52ef73188664e1f5f2df7beba674ac65ddf00b7af95fd0c",
+      "bytes": 22634
+    },
+    "models/bts6/early/h5/model_card.json": {
+      "sha256": "d53b391a1c23a207adfc97724e0e9fa471eaf53956e49662ac0e928608e7d068",
+      "bytes": 6634
+    },
+    "models/bts6/early/h5/venn_abers.json": {
+      "sha256": "c355d5e0c387d4532487f582a8fa8f22bf7da9cc88704dd0a7d11f4e2a3c8674",
+      "bytes": 769334
+    },
+    "models/bts6/early/h5/consensus.pkl.gz": {
+      "sha256": "cbcc8d80da6789b209d34824f733d8ce0df02eb11bc0e2c84e14f1fc4138897c",
+      "bytes": 7451779
+    },
+    "models/bts6/early/h5/manifest.json": {
+      "sha256": "8baf19f45f645431aa44ece17230630017fab9c17c5eb26dcb3e624c9734007b",
+      "bytes": 712
+    },
+    "models/bts6/early/h10/top.txt": {
+      "sha256": "9ca5a66275d064fe74333ce33a188be8815baaf0fcf7a8fbc9e5a3ead12982b2",
+      "bytes": 3000149
+    },
+    "models/bts6/early/h10/slsn_branch.txt": {
+      "sha256": "751518749c79d847e341ee01796ca6d8253ab303f8d5f5d55079a716841dc945",
+      "bytes": 379537
+    },
+    "models/bts6/early/h10/conformal.json": {
+      "sha256": "61db7e88d5b31851c4ba5f8d79ca96ecfb71b8bd8cef8d558bda05c9fb6a1a30",
+      "bytes": 300591
+    },
+    "models/bts6/early/h10/anomaly_calibration.json": {
+      "sha256": "8da6169688ca83f18bfef735687e8efa99e42a156371226ea25a174d67427fbd",
+      "bytes": 22737
+    },
+    "models/bts6/early/h10/model_card.json": {
+      "sha256": "6b6b26d38032e4ad1d70ce57823a9c02e639e9c6ee7078c1eddb5582f5a79b32",
+      "bytes": 6437
+    },
+    "models/bts6/early/h10/venn_abers.json": {
+      "sha256": "52babf1c9f29594aaf796e46bf99b8c21d806b56b5bb52550247d1f857eb0780",
+      "bytes": 762497
+    },
+    "models/bts6/early/h10/consensus.pkl.gz": {
+      "sha256": "234df4c39c2f6d2064c7303d8059871882ced40136aa76024f1045aa8d176542",
+      "bytes": 8399757
+    },
+    "models/bts6/early/h10/manifest.json": {
+      "sha256": "07c5e654924a54dd5c61c6a8f3d1d69c829d98c95fa4f842a1d017c0a3b8f28d",
+      "bytes": 626
+    },
+    "models/bts6/early/h20/top.txt": {
+      "sha256": "5a74ea094123e197274baa09ab638580728e213e034b8f7f3652c5e6564dee49",
+      "bytes": 3240962
+    },
+    "models/bts6/early/h20/slsn_branch.txt": {
+      "sha256": "aa8b4e749876f2901b52fe1fa9fd42e46291b766753759e8223772f46820e148",
+      "bytes": 273926
+    },
+    "models/bts6/early/h20/conformal.json": {
+      "sha256": "5b2823097b7fa31e17f983c94ff03488de4350220ca81daff3f540e767b878d8",
+      "bytes": 303936
+    },
+    "models/bts6/early/h20/anomaly_calibration.json": {
+      "sha256": "ec0ad9dae1ada5a25da25e90b3e996a1ce59ef377caeef154e40e50edb03b596",
+      "bytes": 22768
+    },
+    "models/bts6/early/h20/model_card.json": {
+      "sha256": "747e578a0116abd8a418c590367e206713a7c8a06a06f4e78433bbadca21f972",
+      "bytes": 6457
+    },
+    "models/bts6/early/h20/venn_abers.json": {
+      "sha256": "4ac0b403486c31bb09d2ad6d8168cf7ddd6eca5db0c80ea8a7b7401b3370992b",
+      "bytes": 847850
+    },
+    "models/bts6/early/h20/consensus.pkl.gz": {
+      "sha256": "35504a79e199706ae88973289e147520426a34a080903accfaab7ae5a03cce02",
+      "bytes": 9498482
+    },
+    "models/bts6/early/h20/manifest.json": {
+      "sha256": "af063d30bc2cfa86095c190f25eb24628d7e4e56d5f4178c3fccada760a448d4",
+      "bytes": 626
+    },
+    "benchmark/light_curves.tar.gz": {
+      "sha256": "589673f932ee3b78cd5583f274c2860e91320210cacb6cebcb658e3f13e0fc85",
+      "bytes": 8073551
+    },
+    "benchmark/hosts.csv": {
+      "sha256": "c6d553c321af4294eb7fceb46eb348da1bb41a00f287f996dc9c4eb3658f39ef",
+      "bytes": 1889189
+    },
+    "benchmark/hosts_photoz.csv": {
+      "sha256": "e90821567171f5b88cd0f1fa607e09b76a9cc5c039a79b3cca2e45be8b8c0167",
+      "bytes": 809512
+    },
+    "benchmark/context_gaia_wise.csv": {
+      "sha256": "1565d28c47a1cecf0da8c65490936c0b2f0b360fb23575c49207899f63c03117",
+      "bytes": 942071
+    },
+    "benchmark/ps1_position.csv": {
+      "sha256": "b973ab5d32e45b1a92ad984cffae216e73969e1a7025ed891b1576f472baaf1d",
+      "bytes": 682657
+    },
+    "benchmark/splits/train.csv": {
+      "sha256": "08b0b4837b555a24ef8a4891b40b8f88fc783c0ed554a068c5304cb6b9ed6551",
+      "bytes": 525242
+    },
+    "benchmark/splits/val.csv": {
+      "sha256": "72037e72ffb4116f724f08146ebbe25f03d87cd175a511825e1345cefb24e55f",
+      "bytes": 112684
+    }
+  },
+  "validation_scope": {
+    "functional_existing_environment_and_application_wheel_smokes": true,
+    "fresh_upstream_clean_environment_rebuild": false,
+    "training_or_retraining_required": false
+  },
+  "scope_note": "Package versions and opaque source/model/data checksums only; no scientific outcomes or private filesystem paths."
+}

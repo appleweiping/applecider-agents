@@ -33,6 +33,32 @@ locally on first use; light curves come from local event files when `APPLECIDER_
 otherwise from the broker archive through `flare.fetch` (BOOM when configured). No path is machine-specific,
 so the same commands run in a container or next to SkyPortal.
 
+## Partial-evidence triage (opt-in)
+
+Install this source checkout using the [recorded CPU reproduction profile](docs/reproduction_environment.md)
+for the opt-in interface:
+
+For local or saved FLARE observations, the `partial` command keeps missing or failed evidence unknown
+and returns possible verdict/priority pairs, with separate `decision_certified` and `report_complete`
+fields. It uses no LLM, live history lookup or publishing. Configure local inputs with
+`APPLECIDER_EVENTS_DIRS` and `APPLECIDER_DATA_DIR`:
+
+```bash
+python -m pip install -r requirements-reproduction.txt
+python -m pip install --force-reinstall --no-deps .
+applecider-agents partial ZTF_OBJECT_ID --horizon 5 --profile legacy_report
+```
+
+The Python API (`collect_flare`, `evaluate_flare`) and MCP tool `flare_partial_triage` expose the same
+opt-in path. Certificates concern the frozen software policy within a conservative predicate domain;
+they do not certify astronomical accuracy or free-text claims. Existing `triage` defaults are unchanged.
+
+See the [API, CLI and observation guide](docs/partial_observations.md),
+[reproduction protocol](docs/partial_benchmark.md), [public cohort](benchmarks/README.md), and
+[current design/tuning findings](docs/partial_benchmark_results.md).
+The [continuation checkpoint](docs/continuation.md) records the incomplete confirmation run and remaining work;
+no final confirmation aggregate or figure is included.
+
 ## What the agent does in SkyPortal
 
 FLARE already runs as an analysis service (OSG plugin) and writes a classification and an annotation set

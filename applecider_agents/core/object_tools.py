@@ -44,14 +44,15 @@ def get_photometry(obj_id: str, horizon_days: float = 100.0) -> dict:
 
 
 @beta_tool
-def get_context(obj_id: str) -> dict:
+def get_context(obj_id: str, horizon_days: float = 100.0) -> dict:
     """Catalogue context at the transient position, all available before any spectrum:
     Pan-STARRS host (offset, magnitudes, colours), host photometric redshift and the
     implied pseudo-absolute magnitude, Gaia point source (parallax / proper-motion
     significance), WISE W1-W2, pre-outburst Pan-STARRS counterpart within 1.5 arcsec.
-    Plain flags: nuclear, hostless, stellar astrometry, AGN colour, far host."""
+    Plain flags: nuclear, hostless, stellar astrometry, AGN colour, far host.
+    horizon_days limits the observed peak used for luminosity; default100 preserves legacy calls."""
     try:
-        ev, peak, ctx = _events_and_context(obj_id, 100.0); g = lambda k: ctx.get(k); z = g("z_phot")
+        ev, peak, ctx = _events_and_context(obj_id, horizon_days); g = lambda k: ctx.get(k); z = g("z_phot")
         out = dict(obj_id=obj_id, source=ctx.get("_source"),
                    host=dict(offset_arcsec=_f(g("host_sep"), 2), r_mag=_f(g("host_r"), 2), i_mag=_f(g("host_i"), 2), g_r=_f(g("host_gr"), 2), extended_neighbours_30arcsec=_f(g("n_ext_30"), 0)),
                    redshift=dict(z_phot=_f(z, 3), z_spec_host=_f(g("z_spec"), 4), M_pseudo=_f(m_pseudo(peak, z), 2) if z is not None and z > 0 else None,

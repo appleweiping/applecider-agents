@@ -1,0 +1,233 @@
+{
+  "partition": "tune",
+  "n_sessions": 1024,
+  "n_objects": 256,
+  "compiled_orders": {
+    "decision_only|shared|60": [
+      "get_photometry",
+      "flare_anomaly",
+      "get_context",
+      "flare_classify",
+      "light_curve_history"
+    ],
+    "decision_only|shared|5": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_photometry",
+      "get_context",
+      "light_curve_history"
+    ],
+    "decision_only|shared|25": [
+      "get_photometry",
+      "flare_anomaly",
+      "get_context",
+      "flare_classify",
+      "light_curve_history"
+    ],
+    "decision_only|shared|40": [
+      "get_photometry",
+      "flare_anomaly",
+      "get_context",
+      "flare_classify",
+      "light_curve_history"
+    ],
+    "decision_only|independent|60": [
+      "get_photometry",
+      "flare_anomaly",
+      "get_context",
+      "flare_classify",
+      "light_curve_history"
+    ],
+    "decision_only|independent|5": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_photometry",
+      "get_context",
+      "light_curve_history"
+    ],
+    "decision_only|independent|25": [
+      "get_photometry",
+      "get_context",
+      "flare_anomaly",
+      "flare_classify",
+      "light_curve_history"
+    ],
+    "decision_only|independent|40": [
+      "get_photometry",
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "light_curve_history"
+    ],
+    "legacy_report|shared|60": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "get_photometry",
+      "light_curve_history"
+    ],
+    "legacy_report|shared|5": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "get_photometry",
+      "light_curve_history"
+    ],
+    "legacy_report|shared|25": [
+      "get_context",
+      "get_photometry",
+      "light_curve_history",
+      "flare_anomaly",
+      "flare_classify"
+    ],
+    "legacy_report|shared|40": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "get_photometry",
+      "light_curve_history"
+    ],
+    "legacy_report|independent|60": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "get_photometry",
+      "light_curve_history"
+    ],
+    "legacy_report|independent|5": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "get_photometry",
+      "light_curve_history"
+    ],
+    "legacy_report|independent|25": [
+      "get_context",
+      "get_photometry",
+      "flare_anomaly",
+      "flare_classify",
+      "light_curve_history"
+    ],
+    "legacy_report|independent|40": [
+      "flare_anomaly",
+      "flare_classify",
+      "get_context",
+      "get_photometry",
+      "light_curve_history"
+    ]
+  },
+  "tune_order_scores": {
+    "decision_only|shared|60": {
+      "n_complete": 998,
+      "total_spent": 16088,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|shared|5": {
+      "n_complete": 468,
+      "total_spent": 3628,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|shared|25": {
+      "n_complete": 474,
+      "total_spent": 15304,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|shared|40": {
+      "n_complete": 998,
+      "total_spent": 16088,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|independent|60": {
+      "n_complete": 998,
+      "total_spent": 28200,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|independent|5": {
+      "n_complete": 468,
+      "total_spent": 3072,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|independent|25": {
+      "n_complete": 468,
+      "total_spent": 9744,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "decision_only|independent|40": {
+      "n_complete": 474,
+      "total_spent": 21366,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|shared|60": {
+      "n_complete": 684,
+      "total_spent": 29684,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|shared|5": {
+      "n_complete": 0,
+      "total_spent": 4096,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|shared|25": {
+      "n_complete": 0,
+      "total_spent": 13312,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|shared|40": {
+      "n_complete": 684,
+      "total_spent": 29684,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|independent|60": {
+      "n_complete": 684,
+      "total_spent": 52212,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|independent|5": {
+      "n_complete": 0,
+      "total_spent": 3072,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|independent|25": {
+      "n_complete": 0,
+      "total_spent": 15360,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    },
+    "legacy_report|independent|40": {
+      "n_complete": 0,
+      "total_spent": 36864,
+      "n_requested": 1024,
+      "permutations_evaluated": 120
+    }
+  },
+  "prior_path": "evidence_policy_prior.npz",
+  "history_prior": "uniform latent modeling states, no measured history outcomes",
+  "objective": "maximize actual same-profile runtime subset completion then minimize all-request imposed spend",
+  "tune_terminal_model": "actual evaluate_flare task_complete for all32 acquired-tool subsets per session/profile",
+  "logical_smoothing_mass": 0.05,
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 20261102,
+  "packaging": {
+    "prior_path_base": "configuration_directory; CLI reproduction passes --prior explicitly",
+    "original_selection_config_sha256": "82dfe28c85749b10d99b946310b2ccd71b61b87794b65ecea4ed47fad396af0c",
+    "exact_prior_file_sha256": "1d5cc201370f88c4b9cb6a8470d47f4ec0645496ceaeb92016956211ca53f822",
+    "prior_semantic_sha256": "f4a518705f7b9479118c4ef78420680062503c761237ce27e429dbbe93357cd4",
+    "configuration_semantic_sha256": "f350c464de6e34f757d639521d5ee032bbcd4160b72e4d88257060c25f4f72be",
+    "configuration_status": "tune_selected",
+    "membership_semantic_row_sha256": "3acd8ae697288bbfcde71a0172ce25b92eafd692bb15def9b6fa96c2f78dadea"
+  }
+}

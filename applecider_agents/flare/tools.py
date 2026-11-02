@@ -2,6 +2,9 @@
 alarm, and an inline-photometry entry for clients that already hold the light curve."""
 from __future__ import annotations
 import math
+import time
+from contextvars import ContextVar
+from contextlib import contextmanager
 from anthropic.lib.tools import beta_tool
 from ..core import config as C, data as DATA
 from flare import data as D
@@ -9,6 +12,8 @@ from flare.skyportal import feature_frame, classify, phase_horizon
 
 _CACHE: dict = {}
 _RESULTS: dict = {}
+_SESSION_CACHES = ContextVar("flare_snapshot_caches", default=None)
+_WORK_OBSERVER = ContextVar("flare_work_observer", default=None)
 BAND = {0: "g", 1: "r", 2: "i"}
 
 
@@ -20,27 +25,75 @@ def _f(x, nd=3):
         return None
 
 
+@contextmanager
+def scoped_cache(observer=None):
+    """Own science results/cost instrumentation within one supplied snapshot."""
+    token = _SESSION_CACHES.set(({}, {}))
+    work_token = _WORK_OBSERVER.set(observer)
+    try:
+        yield
+    finally:
+        _WORK_OBSERVER.reset(work_token)
+        _SESSION_CACHES.reset(token)
+
+
+def _caches():
+    scoped = _SESSION_CACHES.get()
+    return scoped if scoped is not None else (_CACHE, _RESULTS)
+
+
+def cached_result(obj_id, horizon_days):
+    return _cache_key(obj_id, horizon_days) in _caches()[1]
+
+
+def _work(backend, fn, *args, **kwargs):
+    observer = _WORK_OBSERVER.get()
+    if observer is None:
+        return fn(*args, **kwargs)
+    started = time.perf_counter()
+    record = {"backend": backend}
+    if backend == "classify":
+        from flare.skyportal import _CLASSIFIERS
+        record["phase_classifier_cache"] = "warm" if kwargs.get("horizon") in _CLASSIFIERS else "cold"
+    try:
+        return fn(*args, **kwargs)
+    finally:
+        record["wall_seconds"] = time.perf_counter() - started
+        observer(record)
+
+def _cache_key(obj_id: str, horizon_days: float):
+    revision = DATA.revision(obj_id)
+    # Retain horizons for the current snapshot only; replaced snapshots cannot grow stale caches.
+    for cache in _caches():
+        for old in list(cache):
+            if old[0] == obj_id and (len(old) < 3 or old[2] != revision):
+                del cache[old]
+    return obj_id, float(horizon_days), revision
+
+
 def prepared(obj_id: str, horizon_days: float = 100.0):
     """Events, context, feature frame and observed peak for one object (cached per process)."""
-    key = (obj_id, float(horizon_days))
-    if key not in _CACHE:
+    key = _cache_key(obj_id, horizon_days)
+    cache = _caches()[0]
+    if key not in cache:
         ev = DATA.events(obj_id, horizon_days)
         peak0 = float(23.9 - 2.5 * ev[:, D.COL["logflux"]].max())
         ctx = DATA.context(obj_id, peak_mag=peak0)
-        X, peak, _ = feature_frame(ev, {k: v for k, v in ctx.items() if not k.startswith("_")}, None)
-        _CACHE[key] = (ev, ctx, X, peak)
-    return _CACHE[key]
+        X, peak, _ = _work("feature_frame", feature_frame, ev, {k: v for k, v in ctx.items() if not k.startswith("_")}, None)
+        cache[key] = (ev, ctx, X, peak)
+    return cache[key]
 
 
 def _flare(obj_id: str, horizon_days: float = 100.0) -> dict:
     """FLARE's classification and anomaly alarm (flare.skyportal.classify) from the model matched to
     the span of the detections inside the horizon (flare.skyportal.phase_horizon); cached per process."""
-    key = (obj_id, float(horizon_days))
-    if key not in _RESULTS:
+    key = _cache_key(obj_id, horizon_days)
+    cache = _caches()[1]
+    if key not in cache:
         ev, _, X, _ = prepared(obj_id, horizon_days)
         span = float(ev[:, D.COL["dt"]].max() - ev[:, D.COL["dt"]].min())
-        _RESULTS[key] = classify(X, C.BASE_RATE, horizon=phase_horizon(span))
-    return _RESULTS[key]
+        cache[key] = _work("classify", classify, X, C.BASE_RATE, horizon=phase_horizon(span))
+    return cache[key]
 
 
 @beta_tool

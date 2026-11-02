@@ -1,0 +1,35 @@
+{
+  "archive_file": "applecider-scientific-checkpoint-20261102.tar.gz",
+  "sha256": "4533963497e0547995e9a7567269f0c33088a5be90da4d478e67866a060e0bd6",
+  "bytes": 17625821,
+  "inventory_sha256": "d79e6c3bdbbb1d176232eba0e6621eb342bda9b580c1def54e448331f5dfff4d",
+  "n_artifacts": 5581,
+  "status": {
+    "schema_version": "1.0",
+    "created_utc": "2026-11-02T22:56:48.479576+00:00",
+    "state": "user_requested_checkpoint; confirmation_incomplete",
+    "confirmation_capture_complete": true,
+    "n_confirmation_captures": 4096,
+    "planned_canonical_confirmation_rows": 262144,
+    "retained_partial_v2_rows": 129037,
+    "partial_v2_rows_by_shard": {
+      "p3-main-decision_only-independent-v2": 34175,
+      "p3-main-decision_only-shared-v2": 32819,
+      "p3-main-legacy_report-independent-v2": 32183,
+      "p3-main-legacy_report-shared-v2": 29860
+    },
+    "confirmation_estimate_available": false,
+    "extra_empirical_and_literal_confirmation_executed": false,
+    "design_and_tune_complete": true,
+    "no_refit_or_reacquisition": true,
+    "interruption_accounting": {
+      "first_attempt_partial_rows": 16029,
+      "first_attempt_observed_child_cpu_seconds": 353.38,
+      "first_attempt_resource_scope": "observed aggregate child CPU only; terminal wall, wrapper CPU and peak RSS unknown",
+      "second_attempt_stop": "user requested normal STOP; children SIGTERM, terminal measured receipts retained",
+      "second_attempt_cpu_seconds": 1749.7560720000001
+    },
+    "claim_scope": "No completed confirmation estimate is available. Completed design experiments did not demonstrate an adaptive acquisition advantage for full reports."
+  },
+  "availability": "local_available_unpublished"
+}

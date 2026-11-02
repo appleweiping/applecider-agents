@@ -9,6 +9,10 @@ Everything returned is plain Python so it can go into a tool result.
 """
 from __future__ import annotations
 import urllib.request
+import copy
+from contextlib import contextmanager
+from contextvars import ContextVar
+import itertools
 from functools import lru_cache
 from pathlib import Path
 import numpy as np, pandas as pd
@@ -18,12 +22,44 @@ from flare.config import HOST_COLS, GW_COLS, POS_COLS
 
 TABLES = {"hosts.csv": HOST_COLS, "hosts_photoz.csv": ["z_phot", "z_spec"], "context_gaia_wise.csv": GW_COLS, "ps1_position.csv": POS_COLS}
 _SEEDED: dict = {}
+_REVISIONS: dict[str, int] = {}
+_SNAPSHOT = ContextVar("applecider_snapshot", default=None)
+_SNAPSHOT_IDS = itertools.count()
 
 
 def seed(obj_id: str, events_array, context: dict) -> None:
     """Photometry and context supplied by the caller (e.g. the FLARE SkyPortal service, which
     already holds them) to be used for obj_id instead of a fetch."""
-    _SEEDED[obj_id] = (np.asarray(events_array), dict(context))
+    arr = np.array(events_array, copy=True)
+    arr.setflags(write=False)
+    _SEEDED[obj_id] = (arr, copy.deepcopy(context))
+    _REVISIONS[obj_id] = _REVISIONS.get(obj_id, 0) + 1
+
+
+def revision(obj_id: str) -> int | tuple[str, int]:
+    """Monotone identity of supplied observations, for process-local science caches."""
+    snapshot = _SNAPSHOT.get()
+    if snapshot is not None and snapshot[0] == obj_id:
+        return snapshot[3]
+    return _REVISIONS.get(obj_id, 0)
+
+
+def unseed(obj_id: str) -> None:
+    """Stop overriding an object; invalidate results from the previous supplied snapshot."""
+    _SEEDED.pop(obj_id, None)
+    _REVISIONS[obj_id] = _REVISIONS.get(obj_id, 0) + 1
+
+
+@contextmanager
+def snapshot(obj_id: str, events_array, context: dict):
+    """Context-local immutable supplied data; legacy/global readers are unaffected."""
+    arr = np.array(events_array, copy=True)
+    arr.setflags(write=False)
+    token = _SNAPSHOT.set((obj_id, arr, copy.deepcopy(context), ("snapshot", next(_SNAPSHOT_IDS))))
+    try:
+        yield
+    finally:
+        _SNAPSHOT.reset(token)
 
 
 def benchmark_file(name: str) -> Path | None:
@@ -51,6 +87,10 @@ def local_event_path(obj_id: str) -> Path | None:
 
 def events(obj_id: str, horizon_days: float = 100.0) -> np.ndarray:
     """(N, 15) event array truncated to the horizon; seeded, local file or fetched photometry."""
+    snapshot = _SNAPSHOT.get()
+    if snapshot is not None and snapshot[0] == obj_id:
+        arr = snapshot[1]
+        return arr[arr[:, 0] <= horizon_days]
     if obj_id in _SEEDED:
         arr = _SEEDED[obj_id][0]
         return arr[arr[:, 0] <= horizon_days]
@@ -112,8 +152,11 @@ def _context_table():
 
 def context(obj_id: str, peak_mag: float | None = None, live: bool = True) -> dict:
     """External context: seeded, the benchmark tables when the object is in them, else live catalogue queries."""
+    snapshot = _SNAPSHOT.get()
+    if snapshot is not None and snapshot[0] == obj_id:
+        return {"_source": "provided", **copy.deepcopy(snapshot[2])}
     if obj_id in _SEEDED:
-        return {"_source": "provided", **_SEEDED[obj_id][1]}
+        return {"_source": "provided", **copy.deepcopy(_SEEDED[obj_id][1])}
     t = _context_table()
     if t is not None and obj_id in t.index:
         row = {k: float(v) for k, v in t.loc[obj_id].items() if isinstance(v, (int, float, np.floating)) and np.isfinite(v)}
