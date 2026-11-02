@@ -2,6 +2,10 @@
 
 Work paused on 2026-11-02 at the user's quota boundary. The study is unfinished; this checkout and its accompanying scientific checkpoint are intended for continuation, not a final confirmation claim.
 
+The scientific archive and encrypted private continuation backup are stored on the separate [checkpoint branch](https://github.com/appleweiping/applecider-agents/tree/checkpoint/evidence-aware-triage-20261102), commit `ed6b48e`. Its README provides checksum and restoration commands. Clone that branch into a separate directory to retrieve the artifacts. The private decryption key is supplied only in the owner's chat and must not be committed or included in an upstream contribution.
+
+The source branch is `research/evidence-aware-triage`. Keep the artifact branch separate from source review. The backup contains no Python virtual environment or external dependency checkout; use the pinned environment recipe below to rebuild them.
+
 ## Completed and pending
 
 - The opt-in partial-evidence runtime, scoped observations, compiled/nullable/EC2 controls and public replay/analysis scripts are implemented. The latest full regression run passed **176 tests**. Installed-wheel checks matched all 22 package Python files.

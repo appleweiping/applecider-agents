@@ -31,5 +31,9 @@
     },
     "claim_scope": "No completed confirmation estimate is available. Completed design experiments did not demonstrate an adaptive acquisition advantage for full reports."
   },
-  "availability": "local_available_unpublished"
+  "availability": "github_checkpoint_branch",
+  "checkpoint_branch": "checkpoint/evidence-aware-triage-20261102",
+  "checkpoint_commit": "ed6b48e",
+  "checkpoint_url": "https://github.com/appleweiping/applecider-agents/tree/checkpoint/evidence-aware-triage-20261102",
+  "archive_url": "https://github.com/appleweiping/applecider-agents/raw/refs/heads/checkpoint/evidence-aware-triage-20261102/applecider-scientific-checkpoint-20261102.tar.gz"
 }
